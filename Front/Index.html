@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+div {
+  padding-left: 50px;
+  padding-top: 15px;
+  width: 50%;
+  margin: 0 auto;
+  font: 14px;
+}
+
+input {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  text-align: center;
+  font: 14px;
+  width: 60px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke-width: 1.5px;
+}
+text {
+  font: bold 48px monospace;
+}
+
+.enter {
+  fill: green;
+}
+
+.update {
+  fill: #333;
+}
+
+.exit {
+  fill: brown;
+}
+</style>
+<body>
+
+  <svg width="960" height="500"></svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.2/signalr.min.js "></script>
+<script >
+  let connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:8080/loghub").build();
+  var jqxhr = $.get( "http://localhost:8080/api/tbllog/realtime", function() {
+    alert( "success" );
+  });
+let dataArray = [];
+let svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height"),
+    g = svg.append("g").attr("transform", "translate(32," + (height / 2) + ")");
+
+function update(data) {
+    let t = d3.transition()
+        .duration(750);
+    // JOIN new data with old elements.
+    let circle = g.selectAll("circle")
+        .data(data);
+    // EXIT old elements not present in new data.
+    circle.exit()
+        .attr("class", "exit")
+        .transition(t)
+        .attr("cy", d => (d.data.value - 60))
+        .style("fill-opacity", 1e-6)
+        .remove();
+    // UPDATE old elements present in new data.
+    circle.attr("class", "update")
+        .attr("cy", d => (d.data.value - 60))
+
+    .attr("r", 5)
+        .style("fill-opacity", 1)
+        .transition(t)
+        .attr("cx", function(d, i) { return i * 32; });
+    // ENTER new elements present in new data.
+
+    circle.enter().append("circle")
+        .attr("class", "enter")
+        //.attr("dy", ".35em")
+        .attr("r", 5)
+        .attr("cy", 60)
+        .attr("cx", (d, i) => { return i * 32; })
+        .style("fill-opacity", 1e-6)
+        //.text((d) => { return d; })
+        .transition(t)
+        .attr("cy", d => (d.data.value - 60))
+        .style("fill-opacity", 1);
+    //console.log(data);
+
+}
+
+update(dataArray);
+connection.on("refreshLog", function(data) {
+
+    if (dataArray.length >= 20) {
+        dataArray.push({
+            data
+        });
+        dataArray = dataArray.slice(5, -(dataArray.length - (dataArray.length - 5)));
+        update(dataArray);
+    } else {
+        dataArray.push({
+            data
+        });
+        update(dataArray);
+    }
+
+});
+
+connection
+    .start(() => console.log("connection on"))
+    .catch(function(err) {
+        return console.error(err.toString());
+    });
+</script>
+
+</body>
+
+</html>
