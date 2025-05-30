@@ -1,4 +1,5 @@
 using Realtime_D3.GRPC.Services;
+using System.IO.Compression;
 
 namespace Realtime_D3.GRPC
 {
@@ -9,7 +10,11 @@ namespace Realtime_D3.GRPC
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddGrpc();
+            builder.Services.AddGrpc(options =>
+            {
+                options.ResponseCompressionLevel = CompressionLevel.Optimal;
+                options.ResponseCompressionAlgorithm = "gzip";
+            });
 
             var app = builder.Build();
 
