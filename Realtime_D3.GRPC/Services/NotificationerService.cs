@@ -4,6 +4,10 @@ using Newtonsoft.Json;
 using Notification;
 using Npgsql;
 using System.Data;
+using Realtime_D3.Shared;
+using Realtime_D3.Shared.Data;
+using Realtime_D3.Shared.Dtos;
+using Realtime_D3.Shared.TableInfo;
 
 namespace Realtime_D3.GRPC.Services
 {
@@ -33,7 +37,6 @@ namespace Realtime_D3.GRPC.Services
                 Console.WriteLine($"Received notification: {e.Payload}");
                 CompleteEntreeHistoryNotification dataPayload = JsonConvert.DeserializeObject<CompleteEntreeHistoryNotification>(e.Payload) ?? new CompleteEntreeHistoryNotification();
 
-                string? azureId = (await (_db.Apiusers.AsNoTracking().FirstOrDefaultAsync(a => a.UserId == dataPayload.data.UserId)))?.AzureId;
                 await responseStream.WriteAsync
                 (
                     new EntryChange
