@@ -1,4 +1,5 @@
-﻿namespace Creator.GRPC
+﻿
+namespace Creator.GRPC
 {
     internal class Program
     {
