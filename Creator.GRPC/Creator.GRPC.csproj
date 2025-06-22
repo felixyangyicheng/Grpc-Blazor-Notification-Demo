@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <Protobuf Include="..\Proto\greeter.proto" GrpcServices="Both" Link="Protos\greeter.proto" />
+
 	  <PackageReference Include="Grpc.AspNetCore" Version="2.64.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1-Preview.1" />
