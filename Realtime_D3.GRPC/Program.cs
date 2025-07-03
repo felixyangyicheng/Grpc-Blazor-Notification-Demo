@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Realtime_D3.GRPC.Data;
 using Realtime_D3.GRPC.Services;
-using RealTime_D3.Grpc.Repository;
+using RealTime_D3.GRPC.Repository;
 using Serilog;
 using System.IO.Compression;
 

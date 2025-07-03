@@ -1,8 +1,9 @@
 ﻿
 using Realtime_D3.GRPC.Data;
-using RealTime_D3.GRPC.Repositroy;
+
 using Notification;
-namespace RealTime_D3.Grpc.Repository;
+using RealTime_D3.GRPC.Repositroy;
+namespace RealTime_D3.GRPC.Repository;
 
     public class TbllogRepository : BaseRepository<Tbllog>, ITbllogRepository
     {
