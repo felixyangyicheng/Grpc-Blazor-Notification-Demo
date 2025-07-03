@@ -3,11 +3,9 @@ using Grpc.Core;
 using Newtonsoft.Json;
 using Notification;
 using Npgsql;
+using Realtime_D3.GRPC.Data;
 using System.Data;
-using Realtime_D3.Shared;
-using Realtime_D3.Shared.Data;
-using Realtime_D3.Shared.Dtos;
-using Realtime_D3.Shared.TableInfo;
+
 
 namespace Realtime_D3.GRPC.Services
 {
@@ -27,7 +25,7 @@ namespace Realtime_D3.GRPC.Services
 
 
 
-        public override async Task GetEntryNotifications(Empty request, IServerStreamWriter<EntryChange> responseStream, ServerCallContext context)
+        public override async Task GetLogNotifications(Empty request, IServerStreamWriter<TbllogInfo> responseStream, ServerCallContext context)
         {
             var cancellationToken = context.CancellationToken;
         
@@ -36,19 +34,12 @@ namespace Realtime_D3.GRPC.Services
             con.Notification += async (o, e) =>
             {
                 Console.WriteLine($"Received notification: {e.Payload}");
-                CompleteEntreeHistoryNotification dataPayload = JsonConvert.DeserializeObject<CompleteEntreeHistoryNotification>(e.Payload) ?? new CompleteEntreeHistoryNotification();
+                TbllogInfo dataPayload = JsonConvert.DeserializeObject<TbllogInfo>(e.Payload) ?? new TbllogInfo();
 
                 await responseStream.WriteAsync
                 (
-                    new EntryChange
-                    {
-                        Table = dataPayload?.table,
-                        Action = dataPayload?.action,
-                        Data = new EntryData
-                        {
 
-                        }
-                    }
+                    dataPayload
                 );
             };
             await using (var cmd = new NpgsqlCommand())

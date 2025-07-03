@@ -22,27 +22,27 @@ package Notification;
 
 service Notificationer {
 
-  rpc GetEntryNotifications (google.protobuf.Empty) returns (stream EntryChange);
+  rpc GetLogNotifications (google.protobuf.Empty) returns (stream TbllogInfo);
 }
 
 
-message GetEntryNotificationsResponse {
-  repeated EntryChange changes = 1;
+message GetLogNotificationsResponse {
+  repeated TbllogInfo changes = 1;
 }
 
-message EntryChange {
+message TbllogInfo {
   google.protobuf.Timestamp date = 1;
   string table = 2;
   string action = 3;
-  EntryData data = 4;
+  Tbllog data = 4;
 }
 
 
-message EntryData {
+message Tbllog {
   google.protobuf.Timestamp dateOperation = 1;
-  string id  = 2;
+  int32  id  = 2;
   string  detail= 3;
-  string  value= 4;
+  int32   value= 4;
   string logDate = 5;
 
 }

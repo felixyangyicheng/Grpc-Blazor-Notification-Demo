@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Realtime_D3.GRPC.Data;
 using Realtime_D3.GRPC.Services;
 using System.IO.Compression;
 
@@ -8,14 +10,14 @@ namespace Realtime_D3.GRPC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            var connString = builder.Configuration.GetConnectionString("postgresql");
             // Add services to the container.
             builder.Services.AddGrpc(options =>
             {
                 options.ResponseCompressionLevel = CompressionLevel.Optimal;
                 options.ResponseCompressionAlgorithm = "gzip";
             });
-
+            builder.Services.AddDbContext<GrpcDbContext>(options => options.UseNpgsql(connString));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
