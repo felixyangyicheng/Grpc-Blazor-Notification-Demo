@@ -29,9 +29,10 @@ namespace Realtime_D3.GRPC.Services
 
         public override async Task GetEntryNotifications(Empty request, IServerStreamWriter<EntryChange> responseStream, ServerCallContext context)
         {
-
+            var cancellationToken = context.CancellationToken;
+        
             await using var con = new NpgsqlConnection(connectionString);
-            await con.OpenAsync();//  con.Notification += (o, e) => Console.WriteLine($"Received notification: {e.Payload}");
+            await con.OpenAsync(cancellationToken);//  con.Notification += (o, e) => Console.WriteLine($"Received notification: {e.Payload}");
             con.Notification += async (o, e) =>
             {
                 Console.WriteLine($"Received notification: {e.Payload}");
@@ -57,10 +58,16 @@ namespace Realtime_D3.GRPC.Services
                 cmd.Connection = con;
                 cmd.ExecuteNonQuery();
             }
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                // Waiting for Event
-                con.Wait();
+                try
+                {
+                    await con.WaitAsync(cancellationToken);
+                }
+                catch (OperationCanceledException)
+                {
+                    break;
+                }
             }
         }
     }
