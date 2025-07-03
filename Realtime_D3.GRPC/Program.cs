@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Realtime_D3.GRPC.Data;
 using Realtime_D3.GRPC.Services;
+using Serilog;
 using System.IO.Compression;
 
 namespace Realtime_D3.GRPC
@@ -18,6 +19,8 @@ namespace Realtime_D3.GRPC
                 options.ResponseCompressionAlgorithm = "gzip";
             });
             builder.Services.AddDbContext<GrpcDbContext>(options => options.UseNpgsql(connString));
+            builder.Host.UseSerilog((ctx, lc) =>
+                lc.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
