@@ -10,6 +10,7 @@
 
   <ItemGroup>
 	  <Protobuf Include="..\Proto\notification.proto" GrpcServices="Both" Link="Protos\notification.proto" />
+	  <Protobuf Include="..\Proto\insert.proto" GrpcServices="Both" Link="Protos\insert.proto" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1-Preview.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

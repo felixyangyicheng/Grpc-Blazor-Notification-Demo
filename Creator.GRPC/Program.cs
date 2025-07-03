@@ -1,4 +1,6 @@
 ﻿
+using Insertion;
+
 namespace Creator.GRPC
 {
     internal class Program
@@ -7,10 +9,10 @@ namespace Creator.GRPC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddGrpcClient<Greeter.GreeterClient>(options =>
+            builder.Services.AddGrpcClient<InsertService.InsertServiceClient>(options =>
             {
                 // 配置服务地址
-                options.Address = new Uri("http://localhost:500");
+                options.Address = new Uri("http://localhost:5000");
             })
            // .AddInterceptor<ClientLoggerInterceptor>()  // 添加客户端拦截器
             .EnableCallContextPropagation();           // 启用调用上下文传播
