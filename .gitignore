@@ -351,3 +351,9 @@ MigrationBackup/
 
 Realtime_D3.GRPC/bin/*
 Realtime_D3.GRPC/obj/*
+Realtime_D3.Maui/bin/*
+Realtime_D3.Maui/obj/*
+Realtime_D3.Shared/bin/*
+Realtime_D3.Shared/obj/*
+Realtime_D3.GRPC.Blazor/bin/*
+Realtime_D3.GRPC.Blazor/obj/*

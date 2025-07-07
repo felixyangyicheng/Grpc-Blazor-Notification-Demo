@@ -1,0 +1,8 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="Realtime_D3.Maui.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:Realtime_D3.Maui.WinUI">
+
+</maui:MauiWinUIApplication>

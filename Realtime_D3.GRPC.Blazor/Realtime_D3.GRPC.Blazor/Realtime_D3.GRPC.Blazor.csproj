@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Locales\en.json" />
+    <EmbeddedResource Include="Locales\zh.json" />
+
+  </ItemGroup>
+  <ItemGroup>
+
+    <Protobuf Include="..\Proto\notification.proto" GrpcServices="Both" Link="Protos\notification.proto" />
+    <Protobuf Include="..\Proto\insert.proto" GrpcServices="Both" Link="Protos\insert.proto" />
+  </ItemGroup>
+  <ItemGroup>
+
+    <PackageReference Include="BootstrapBlazor" Version="9.8.1-beta02" />
+    <PackageReference Include="BootstrapBlazor.FontAwesome" Version="9.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0-preview.5.25277.114" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.0-preview.5.25277.114" PrivateAssets="all" />
+    <PackageReference Include="Google.Protobuf" Version="3.31.1" />
+    <PackageReference Include="Grpc.Core.Api" Version="2.71.0" />
+    <PackageReference Include="Grpc.Net.Client.Web" Version="2.71.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.72.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
