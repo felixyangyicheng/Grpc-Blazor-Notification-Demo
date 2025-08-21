@@ -13,10 +13,7 @@
   </ItemGroup>
   <ItemGroup>
 
-    <Protobuf Include="..\Proto\notification.proto" GrpcServices="Both" Link="Protos\notification.proto" />
-    <Protobuf Include="..\Proto\insert.proto" GrpcServices="Both" Link="Protos\insert.proto" />
-  </ItemGroup>
-  <ItemGroup>
+
 
     <PackageReference Include="BootstrapBlazor" Version="9.8.1-beta02" />
     <PackageReference Include="BootstrapBlazor.FontAwesome" Version="9.0.*" />
@@ -30,6 +27,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <Protobuf Include="..\..\Proto\notification.proto" GrpcServices="Both" Link="Proto\notification.proto" />
+    <Protobuf Include="..\..\Proto\insert.proto" GrpcServices="Both" Link="Proto\insert.proto" />
   </ItemGroup>
 
 </Project>
